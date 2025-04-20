@@ -483,30 +483,30 @@ function updateReceivablesSummary(receivables) {
     console.log('Updating receivables summary with corrected business logic');
     
     try {
-        // Ensure receivables is valid
+        
         receivables = receivables || [];
         
-        // 1. Calculate GROSS total of ALL transactions
+        
         const grossTotal = receivables.reduce((sum, rx) => sum + (parseFloat(rx.amount) || 0), 0);
         
-        // 2. Calculate total of RECEIVED transactions
+        
         const paidTransactions = receivables.filter(rx => rx.status === 'paid');
         const paidTotal = paidTransactions.reduce((sum, rx) => sum + (parseFloat(rx.amount) || 0), 0);
         
-        // 3. Calculate total of ACTIVE transactions (to receive)
+        
         const activeTransactions = receivables.filter(rx => rx.status !== 'paid' && rx.status !== 'reversed');
         const activeTotal = activeTransactions.reduce((sum, rx) => sum + (parseFloat(rx.amount) || 0), 0);
         
-        // 4. Calculate NET balance explicitly
-        // If your gross total already includes both paid and unpaid, you need to subtract paid amount twice
+        
+        
         const netBalance = grossTotal - paidTotal - paidTotal;
         
-        // Check if the calculation matches expected active total
+        
         if (Math.abs(netBalance - activeTotal) > 1) {
             console.warn(`Balance calculation mismatch! netBalance: ${netBalance} vs activeTotal: ${activeTotal}`);
         }
         
-        // 5. Update UI with explicit values
+        
         if (document.getElementById('total-receivables')) {
             document.getElementById('total-receivables').textContent = window.utils.formatCurrency(activeTotal);
         }
@@ -516,11 +516,11 @@ function updateReceivablesSummary(receivables) {
         }
         
         if (document.getElementById('balance-receivable')) {
-            // Use net balance which should now be correct
+            
             document.getElementById('balance-receivable').textContent = window.utils.formatCurrency(netBalance);
         }
         
-        // Log detailed calculation for verification
+        
         console.log('Detailed receivable calculation:');
         console.log(`- Gross Total: ${grossTotal}`);
         console.log(`- Paid Total: ${paidTotal}`);
@@ -1789,30 +1789,30 @@ function updatePayablesSummary(payables) {
     console.log('Updating payables summary with corrected business logic');
     
     try {
-        // Ensure payables is valid
+        
         payables = payables || [];
         
-        // 1. Calculate GROSS total of ALL transactions
+        
         const grossTotal = payables.reduce((sum, px) => sum + (parseFloat(px.amount) || 0), 0);
         
-        // 2. Calculate total of PAID transactions
+        
         const paidTransactions = payables.filter(px => px.status === 'paid');
         const paidTotal = paidTransactions.reduce((sum, px) => sum + (parseFloat(px.amount) || 0), 0);
         
-        // 3. Calculate total of ACTIVE transactions (to pay)
+        
         const activeTransactions = payables.filter(px => px.status !== 'paid' && px.status !== 'reversed');
         const activeTotal = activeTransactions.reduce((sum, px) => sum + (parseFloat(px.amount) || 0), 0);
         
-        // 4. Calculate NET balance explicitly
-        // If your gross total already includes both paid and unpaid, you need to subtract paid amount twice
+        
+        
         const netBalance = grossTotal - paidTotal - paidTotal;
         
-        // Check if the calculation matches expected active total
+        
         if (Math.abs(netBalance - activeTotal) > 1) {
             console.warn(`Balance calculation mismatch! netBalance: ${netBalance} vs activeTotal: ${activeTotal}`);
         }
         
-        // 5. Update UI with explicit values
+        
         if (document.getElementById('total-payables')) {
             document.getElementById('total-payables').textContent = window.utils.formatCurrency(activeTotal);
         }
@@ -1822,11 +1822,11 @@ function updatePayablesSummary(payables) {
         }
         
         if (document.getElementById('balance-payable')) {
-            // Use net balance which should now be correct
+            
             document.getElementById('balance-payable').textContent = window.utils.formatCurrency(netBalance);
         }
         
-        // Log detailed calculation for verification
+        
         console.log('Detailed payable calculation:');
         console.log(`- Gross Total: ${grossTotal}`);
         console.log(`- Paid Total: ${paidTotal}`);
